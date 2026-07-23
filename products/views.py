@@ -1,25 +1,23 @@
-from rest_framework import generics
+from rest_framework import viewsets, generics
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Category
-from .serializers import CategorySerializer
-
-from users.permissions import IsAdmin
+from .models import Category, Product
+from .serializers import CategorySerializer, ProductSerializer
 
 
 class CategoryListCreateView(generics.ListCreateAPIView):
-
-    queryset = Category.objects.all().order_by("category_name")
-
+    queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
-    permission_classes = [IsAuthenticated, IsAdmin]
+    permission_classes = [IsAuthenticated]
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
-
     queryset = Category.objects.all()
-
     serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
 
-    permission_classes = [IsAuthenticated, IsAdmin]
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
