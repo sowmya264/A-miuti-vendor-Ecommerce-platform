@@ -22,6 +22,7 @@ urlpatterns = [
     path("api/token/refresh/",TokenRefreshView.as_view(),name="token_refresh",),
     path("api/products/", include("products.urls")),
     path("api/seller/", include("seller.urls")),
+    path("api/orders/", include("orders.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(
