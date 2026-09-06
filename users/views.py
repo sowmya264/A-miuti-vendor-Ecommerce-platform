@@ -9,7 +9,7 @@ from .serializers import (
     CustomerRegisterSerializer
 )
 from .login_serializer import LoginSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import RetrieveUpdateAPIView
 
 from .models import Customer
@@ -21,6 +21,8 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
 
     serializer_class = RegisterSerializer
+
+    permission_classes = [AllowAny]
 
 
 class LoginView(APIView):
@@ -36,14 +38,17 @@ class LoginView(APIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.validated_data)
-    
+
+
 class CustomerRegisterView(generics.CreateAPIView):
 
     queryset = User.objects.all()
 
     serializer_class = CustomerRegisterSerializer
-    
-    
+
+    permission_classes = [AllowAny]
+
+
 class CustomerProfileView(RetrieveUpdateAPIView):
 
     serializer_class = CustomerProfileSerializer
@@ -59,4 +64,3 @@ class CustomerProfileView(RetrieveUpdateAPIView):
         )
 
         return user
-
